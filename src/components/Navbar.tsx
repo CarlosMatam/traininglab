@@ -1,13 +1,26 @@
+import Link from "next/link"
+
 export function Navbar() {
   return (
-    <nav className="bg-blue-900 text-white py-4">
-      <div className="container mx-auto flex justify-end space-x-6 text-sm">
-        <a href="#" className="hover:underline">INICIO</a>
-        <a href="#" className="hover:underline">CURSOS</a>
-        <a href="#" className="hover:underline">INSTRUCTORES</a>
-        <a href="#" className="hover:underline">TESTIMONIOS</a>
-        <a href="#" className="hover:underline">CONTACTO</a>
+    <nav className="bg-[#0D47A1]  py-6">
+      <div className="container mx-auto px-4 flex justify-end space-x-8 pr-64">
+        <Link href="#" className="text-xs tracking-wide hover:text-gray-200 transition-colors">
+          INICIO
+        </Link>
+        <Link href="#" className="text-xs  tracking-wide hover:text-gray-200 transition-colors">
+          CURSOS
+        </Link>
+        <Link href="#" className="text-xs tracking-wide hover:text-gray-200 transition-colors">
+          INSTRUCTORES
+        </Link>
+        <Link href="#" className="text-xs tracking-wide hover:text-gray-200 transition-colors">
+          TESTIMONIOS
+        </Link>
+        <Link href="#" className="text-xs tracking-wide hover:text-gray-200 transition-colors">
+          CONTACTO
+        </Link>
       </div>
     </nav>
-  );
+  )
 }
+
