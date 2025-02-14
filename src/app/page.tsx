@@ -1,4 +1,6 @@
-
+import { Navbar } from '@/components/Navbar'
+import { HeroSection } from '@/components/HeroSection'
+import { FloatingChatButton } from '@/components/FloatingChatButton'
 
 
 
@@ -7,9 +9,9 @@
 const HomePage = () => {
   return (
     <div>
-      {/* <Navbar />
+      <Navbar />
       <HeroSection />
-      <FloatingChatButton /> */}
+      <FloatingChatButton /> 
     </div>
   );
 };
