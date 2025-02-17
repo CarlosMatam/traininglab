@@ -21,15 +21,15 @@ const plans = [
   },
 ];
 
-export function  Pricing() {
+export function Pricing() {
   return (
     <section className="py-12 bg-white text-center">
-      <h2 className="text-3xl font-bold text-gray-900 mb-8">Planes</h2>
+      <h2 className="text-5xl font-bold text-gray-900 mb-12">Planes</h2>
       <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6">
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="border rounded-lg shadow-lg p-6 bg-gray-100"
+            className={`border rounded-lg shadow-lg p-6 bg-gray-100 ${index === 1 ? '-mt-6' : ''}`}
           >
             <h3 className="text-gray-700 font-semibold">{plan.title}</h3>
             <p className={`text-4xl font-bold ${plan.highlight} mt-2`}>
@@ -41,6 +41,4 @@ export function  Pricing() {
       </div>
     </section>
   );
-};
-
-export default Pricing;
+}

@@ -2,7 +2,7 @@ import { FaFacebook, FaInstagram } from "react-icons/fa";
 
 export function ContactFooter() {
   return (
-    <footer className="bg-gray-900 text-white py-10">
+    <footer id="contacto" className="bg-gray-900 text-white py-10">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="text-2xl font-bold">CONTÁCTENOS</h2>
         <p className="mt-2 text-gray-400 max-w-lg">

@@ -5,6 +5,9 @@ import { AboutSection } from '@/components/AboutSection'
 import { ExpertCarousel } from "@/components/ExpertCarousel"
 import { ContactFooter } from "@/components/Footer"
 import { Pricing } from "@/components/Pricing"
+import { CourseGrid}  from "@/components/Course"
+import { Partners } from "@/components/Partners"
+import TestimonialsCarousel from "@/components/testimonials-carousel"
 
 
 
@@ -17,6 +20,9 @@ const HomePage = () => {
       <FloatingChatButton /> 
       <AboutSection/> 
       <ExpertCarousel/> 
+      <CourseGrid />
+      <Partners />
+      <TestimonialsCarousel />
       < Pricing/> 
       <ContactFooter/> 
       

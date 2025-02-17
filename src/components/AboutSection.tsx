@@ -5,7 +5,7 @@ export function AboutSection() {
           <h2 className="text-[#1B4B72] text-4xl font-bold mb-8 pb-2 border-b-2 border-[#1B4B72] inline-block">
             THE TRAINING LAB
           </h2>
-          <p className="text-white text-lg leading-relaxed">
+          <p className="text-white text-lg leading-relaxed text-justify">
             The Training Lab es tu socio estratégico para el desarrollo de líderes excepcionales. Nuestro instituto
             internacional ofrece programas de entrenamiento personalizados y de vanguardia, diseñados para equipar a
             ejecutivos de alto nivel con las herramientas y el conocimiento necesarios para impulsar el éxito de sus
