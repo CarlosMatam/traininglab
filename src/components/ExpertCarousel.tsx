@@ -10,13 +10,14 @@ interface ExpertFromFirebase {
   nombre: string
   puesto: string
   descripcion: string
+  Imagen?: string  // Make optional since some experts might not have an image
 }
 
 interface Expert extends ExpertFromFirebase {
-  image: string
+  image: string  // This will always have a value (either from DB or fallback)
 }
 
-const expertImages = ["/Persona1.jpg", "/Persona.jpg"]
+const FALLBACK_IMAGE = "/person.jpg"
 
 export function ExpertCarousel() {
   const [experts, setExperts] = useState<Expert[]>([])
@@ -26,12 +27,12 @@ export function ExpertCarousel() {
     const fetchExperts = async () => {
       const expertsCollection = collection(db, "socios")
       const expertsSnapshot = await getDocs(expertsCollection)
-      const expertsList = expertsSnapshot.docs.map((doc, index) => {
+      const expertsList = expertsSnapshot.docs.map((doc) => {
         const data = doc.data() as ExpertFromFirebase
         return {
           ...data,
           id: doc.id,
-          image: expertImages[index % expertImages.length],
+          image: data.Imagen || FALLBACK_IMAGE, 
         }
       })
       setExperts(expertsList)
@@ -80,8 +81,8 @@ export function ExpertCarousel() {
             {/* Imagen del experto */}
             <div className="flex justify-center">
               <Image
-                src={experts[currentExpert].image || "/placeholder.svg"}
-                alt={`Foto de ${experts[currentExpert].nombre}, ${experts[currentExpert].puesto}`}
+                src={experts[currentExpert].image}
+                alt="expertos"
                 width={300}
                 height={400}
                 className="rounded-lg object-cover shadow-md"
@@ -123,4 +124,3 @@ export function ExpertCarousel() {
     </section>
   )
 }
-
