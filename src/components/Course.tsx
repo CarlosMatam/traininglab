@@ -2,258 +2,38 @@
 
 import Image from "next/image"
 import { useState, useEffect } from "react"
+import { db, collection, getDocs } from "../lib/firebaseConfig"
 
-interface CourseDetails {
-  date: string
-  location: string
-  duration: string
-  instructors: string[]
-  cost: string
-}
+const courseImages = ["/Cursos.jpg", "/Cursos1.jpg", "/Cursos2.jpg", "/Cursos3.jpg", "/Cursos4.jpg",, "/Cursos5.jpg", "/Cursos6.jpg"]
 
 interface Course {
-  id: number
-  title: string
-  description: string
+  id: string
+  titulo: string
+  subtitulo: string
   temario: string[]
-  objectives: string[]
-  details: CourseDetails
+  objetivos: string[]
+  detalles: string[]
   image: string
 }
 
-const courses: Course[] = [
-  {
-    id: 1,
-    title: "THE X LEARNING FACTOR: RUNNING TRAINING LIKE A BUSINESS",
-    description: "¿Cómo tener una capacitación alineada con el desarrollo y el cambio en sus dirigidos?",
-    temario: [
-      "Mapeo por clusters de puestos y brechas de capacitación y aprendizaje como base",
-      "¡Adiós a los objetivos borrosos! Diseño de objetivos de aprendizaje alineados con el desempeño",
-      "Puntos clave en los cuatro niveles de impacto de la capacitación",
-      "Método de training: catalizando el USO masivo sobre modelos",
-    ],
-    objectives: [
-      "Definir y diferenciar conceptos clave como mapeo de puestos",
-      "Explicar cómo el mapeo de puestos por clusters",
-      "Diseñar un plan de capacitación utilizando las herramientas",
-      "Calcular el ROI de un programa de capacitación",
-    ],
-    details: {
-      date: "PRÓXIMAMENTE",
-      location: "DELTA BY MARRIOTT, SAN JOSÉ AUROLA",
-      duration: "8 HORAS",
-      instructors: ["ENRIQUE MARGERY Y MAX SANTAMARÍA"],
-      cost: "$199+ IVA",
-    },
-    image: "/Cursos.jpg",
-  },
-  {
-    id: 2,
-    title: "THE X LEARNING FACTOR: RUNNING TRAINING LIKE A BUSINESS",
-    description: "¿Cómo tener una capacitación alineada con el desarrollo y el cambio en sus dirigidos?",
-    temario: [
-      "Mapeo por clusters de puestos y brechas de capacitación y aprendizaje como base",
-      "¡Adiós a los objetivos borrosos! Diseño de objetivos de aprendizaje alineados con el desempeño",
-      "Puntos clave en los cuatro niveles de impacto de la capacitación",
-      "Método de training: catalizando el USO masivo sobre modelos",
-    ],
-    objectives: [
-      "Definir y diferenciar conceptos clave como mapeo de puestos",
-      "Explicar cómo el mapeo de puestos por clusters",
-      "Diseñar un plan de capacitación utilizando las herramientas",
-      "Calcular el ROI de un programa de capacitación",
-    ],
-    details: {
-      date: "PRÓXIMAMENTE",
-      location: "DELTA BY MARRIOTT, SAN JOSÉ AUROLA",
-      duration: "8 HORAS",
-      instructors: ["ENRIQUE MARGERY Y MAX SANTAMARÍA"],
-      cost: "$199+ IVA",
-    },
-    image: "/Cursos.jpg",
-  },
-  {
-    id: 3,
-    title: "THE X LEARNING FACTOR: RUNNING TRAINING LIKE A BUSINESS",
-    description: "¿Cómo tener una capacitación alineada con el desarrollo y el cambio en sus dirigidos?",
-    temario: [
-      "Mapeo por clusters de puestos y brechas de capacitación y aprendizaje como base",
-      "¡Adiós a los objetivos borrosos! Diseño de objetivos de aprendizaje alineados con el desempeño",
-      "Puntos clave en los cuatro niveles de impacto de la capacitación",
-      "Método de training: catalizando el USO masivo sobre modelos",
-    ],
-    objectives: [
-      "Definir y diferenciar conceptos clave como mapeo de puestos",
-      "Explicar cómo el mapeo de puestos por clusters",
-      "Diseñar un plan de capacitación utilizando las herramientas",
-      "Calcular el ROI de un programa de capacitación",
-    ],
-    details: {
-      date: "PRÓXIMAMENTE",
-      location: "DELTA BY MARRIOTT, SAN JOSÉ AUROLA",
-      duration: "8 HORAS",
-      instructors: ["ENRIQUE MARGERY Y MAX SANTAMARÍA"],
-      cost: "$199+ IVA",
-    },
-    image: "/Cursos.jpg",
-  },
-  {
-    id: 4,
-    title: "THE X LEARNING FACTOR: RUNNING TRAINING LIKE A BUSINESS",
-    description: "¿Cómo tener una capacitación alineada con el desarrollo y el cambio en sus dirigidos?",
-    temario: [
-      "Mapeo por clusters de puestos y brechas de capacitación y aprendizaje como base",
-      "¡Adiós a los objetivos borrosos! Diseño de objetivos de aprendizaje alineados con el desempeño",
-      "Puntos clave en los cuatro niveles de impacto de la capacitación",
-      "Método de training: catalizando el USO masivo sobre modelos",
-    ],
-    objectives: [
-      "Definir y diferenciar conceptos clave como mapeo de puestos",
-      "Explicar cómo el mapeo de puestos por clusters",
-      "Diseñar un plan de capacitación utilizando las herramientas",
-      "Calcular el ROI de un programa de capacitación",
-    ],
-    details: {
-      date: "PRÓXIMAMENTE",
-      location: "DELTA BY MARRIOTT, SAN JOSÉ AUROLA",
-      duration: "8 HORAS",
-      instructors: ["ENRIQUE MARGERY Y MAX SANTAMARÍA"],
-      cost: "$199+ IVA",
-    },
-    image: "/Cursos.jpg",
-  },
-  {
-    id: 5,
-    title: "THE X LEARNING FACTOR: RUNNING TRAINING LIKE A BUSINESS",
-    description: "¿Cómo tener una capacitación alineada con el desarrollo y el cambio en sus dirigidos?",
-    temario: [
-      "Mapeo por clusters de puestos y brechas de capacitación y aprendizaje como base",
-      "¡Adiós a los objetivos borrosos! Diseño de objetivos de aprendizaje alineados con el desempeño",
-      "Puntos clave en los cuatro niveles de impacto de la capacitación",
-      "Método de training: catalizando el USO masivo sobre modelos",
-    ],
-    objectives: [
-      "Definir y diferenciar conceptos clave como mapeo de puestos",
-      "Explicar cómo el mapeo de puestos por clusters",
-      "Diseñar un plan de capacitación utilizando las herramientas",
-      "Calcular el ROI de un programa de capacitación",
-    ],
-    details: {
-      date: "PRÓXIMAMENTE",
-      location: "DELTA BY MARRIOTT, SAN JOSÉ AUROLA",
-      duration: "8 HORAS",
-      instructors: ["ENRIQUE MARGERY Y MAX SANTAMARÍA"],
-      cost: "$199+ IVA",
-    },
-    image: "/Cursos.jpg",
-  },
-  {
-    id: 6,
-    title: "THE X LEARNING FACTOR: RUNNING TRAINING LIKE A BUSINESS",
-    description: "¿Cómo tener una capacitación alineada con el desarrollo y el cambio en sus dirigidos?",
-    temario: [
-      "Mapeo por clusters de puestos y brechas de capacitación y aprendizaje como base",
-      "¡Adiós a los objetivos borrosos! Diseño de objetivos de aprendizaje alineados con el desempeño",
-      "Puntos clave en los cuatro niveles de impacto de la capacitación",
-      "Método de training: catalizando el USO masivo sobre modelos",
-    ],
-    objectives: [
-      "Definir y diferenciar conceptos clave como mapeo de puestos",
-      "Explicar cómo el mapeo de puestos por clusters",
-      "Diseñar un plan de capacitación utilizando las herramientas",
-      "Calcular el ROI de un programa de capacitación",
-    ],
-    details: {
-      date: "PRÓXIMAMENTE",
-      location: "DELTA BY MARRIOTT, SAN JOSÉ AUROLA",
-      duration: "8 HORAS",
-      instructors: ["ENRIQUE MARGERY Y MAX SANTAMARÍA"],
-      cost: "$199+ IVA",
-    },
-    image: "/Cursos.jpg",
-  },
-  {
-    id: 7,
-    title: "THE X LEARNING FACTOR: RUNNING TRAINING LIKE A BUSINESS",
-    description: "¿Cómo tener una capacitación alineada con el desarrollo y el cambio en sus dirigidos?",
-    temario: [
-      "Mapeo por clusters de puestos y brechas de capacitación y aprendizaje como base",
-      "¡Adiós a los objetivos borrosos! Diseño de objetivos de aprendizaje alineados con el desempeño",
-      "Puntos clave en los cuatro niveles de impacto de la capacitación",
-      "Método de training: catalizando el USO masivo sobre modelos",
-    ],
-    objectives: [
-      "Definir y diferenciar conceptos clave como mapeo de puestos",
-      "Explicar cómo el mapeo de puestos por clusters",
-      "Diseñar un plan de capacitación utilizando las herramientas",
-      "Calcular el ROI de un programa de capacitación",
-    ],
-    details: {
-      date: "PRÓXIMAMENTE",
-      location: "DELTA BY MARRIOTT, SAN JOSÉ AUROLA",
-      duration: "8 HORAS",
-      instructors: ["ENRIQUE MARGERY Y MAX SANTAMARÍA"],
-      cost: "$199+ IVA",
-    },
-    image: "/Cursos.jpg",
-  },
-  {
-    id: 8,
-    title: "THE X LEARNING FACTOR: RUNNING TRAINING LIKE A BUSINESS",
-    description: "¿Cómo tener una capacitación alineada con el desarrollo y el cambio en sus dirigidos?",
-    temario: [
-      "Mapeo por clusters de puestos y brechas de capacitación y aprendizaje como base",
-      "¡Adiós a los objetivos borrosos! Diseño de objetivos de aprendizaje alineados con el desempeño",
-      "Puntos clave en los cuatro niveles de impacto de la capacitación",
-      "Método de training: catalizando el USO masivo sobre modelos",
-    ],
-    objectives: [
-      "Definir y diferenciar conceptos clave como mapeo de puestos",
-      "Explicar cómo el mapeo de puestos por clusters",
-      "Diseñar un plan de capacitación utilizando las herramientas",
-      "Calcular el ROI de un programa de capacitación",
-    ],
-    details: {
-      date: "PRÓXIMAMENTE",
-      location: "DELTA BY MARRIOTT, SAN JOSÉ AUROLA",
-      duration: "8 HORAS",
-      instructors: ["ENRIQUE MARGERY Y MAX SANTAMARÍA"],
-      cost: "$199+ IVA",
-    },
-    image: "/Cursos.jpg",
-  },
-
-  {
-    id: 9,
-    title: "THE X LEARNING FACTOR: RUNNING TRAINING LIKE A BUSINESS",
-    description: "¿Cómo tener una capacitación alineada con el desarrollo y el cambio en sus dirigidos?",
-    temario: [
-      "Mapeo por clusters de puestos y brechas de capacitación y aprendizaje como base",
-      "¡Adiós a los objetivos borrosos! Diseño de objetivos de aprendizaje alineados con el desempeño",
-      "Puntos clave en los cuatro niveles de impacto de la capacitación",
-      "Método de training: catalizando el USO masivo sobre modelos",
-    ],
-    objectives: [
-      "Definir y diferenciar conceptos clave como mapeo de puestos",
-      "Explicar cómo el mapeo de puestos por clusters",
-      "Diseñar un plan de capacitación utilizando las herramientas",
-      "Calcular el ROI de un programa de capacitación",
-    ],
-    details: {
-      date: "PRÓXIMAMENTE",
-      location: "DELTA BY MARRIOTT, SAN JOSÉ AUROLA",
-      duration: "8 HORAS",
-      instructors: ["ENRIQUE MARGERY Y MAX SANTAMARÍA"],
-      cost: "$199+ IVA",
-    },
-    image: "/Cursos.jpg",
-  },
-]
-
 export function CourseGrid() {
+  const [courses, setCourses] = useState<Course[]>([])
   const [windowWidth, setWindowWidth] = useState(0)
 
   useEffect(() => {
+    const fetchCourses = async () => {
+      const coursesCollection = collection(db, "cursos")
+      const coursesSnapshot = await getDocs(coursesCollection)
+      const coursesList = coursesSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        image: courseImages[Math.floor(Math.random() * courseImages.length)],
+      })) as Course[]
+      setCourses(coursesList)
+    }
+
+    fetchCourses()
+
     const handleResize = () => setWindowWidth(window.innerWidth)
     handleResize()
     window.addEventListener("resize", handleResize)
@@ -283,7 +63,7 @@ export function CourseGrid() {
         <h3 className="text-black text-center text-2xl font-bold mb-6 max-w-4xl mx-auto">
           Invierte en el desarrollo de tu equipo y mejora los resultados de tu empresa.
         </h3>
-        <p className=" text-black text-center text-lg max-w-4xl mx-auto mb-16">
+        <p className="text-black text-center text-lg max-w-4xl mx-auto mb-16">
           Nuestros cursos están diseñados para fortalecer las habilidades de tus empleados y mejorar el desempeño de tu
           organización. Al invertir en la capacitación de tu equipo, estarás impulsando la innovación, la productividad
           y la satisfacción laboral.
@@ -307,7 +87,7 @@ export function CourseGrid() {
                   <div className="relative w-full h-48">
                     <Image
                       src={course.image || "/placeholder.svg"}
-                      alt={course.title}
+                      alt={course.titulo}
                       fill
                       className="object-cover"
                       priority={index === 0}
@@ -319,8 +99,8 @@ export function CourseGrid() {
                   <div className="relative p-6">
                     {/* Encabezado */}
                     <div className="mb-4">
-                      <h2 className="text-xl font-bold text-white mb-2">{course.title}</h2>
-                      <p className="text-gray-300 text-sm">{course.description}</p>
+                      <h2 className="text-xl font-bold text-white mb-2">{course.titulo}</h2>
+                      <p className="text-gray-300 text-sm">{course.subtitulo}</p>
                     </div>
 
                     {/* Temario */}
@@ -340,7 +120,7 @@ export function CourseGrid() {
                     <div className="mb-4">
                       <h3 className="text-white font-semibold mb-2">Objetivos</h3>
                       <ul className="space-y-1">
-                        {course.objectives.map((objective, idx) => (
+                        {course.objetivos.map((objective, idx) => (
                           <li key={idx} className="text-gray-300 text-sm flex gap-2">
                             <span className="text-white">•</span>
                             {objective}
@@ -352,26 +132,15 @@ export function CourseGrid() {
                     {/* Detalles del curso */}
                     <div className="mt-4">
                       <div className="space-y-1 text-sm text-gray-300 mb-4 bg-black">
-                        <p className="flex gap-2">
-                          <span className="text-white font-semibold">FECHA:</span>
-                          {course.details.date}
-                        </p>
-                        <p className="flex gap-2">
-                          <span className="text-white font-semibold">LUGAR:</span>
-                          {course.details.location}
-                        </p>
-                        <p className="flex gap-2">
-                          <span className="text-white font-semibold">DURACIÓN:</span>
-                          {course.details.duration}
-                        </p>
-                        <p className="flex gap-2">
-                          <span className="text-white font-semibold">INSTRUCTORES:</span>
-                          {course.details.instructors.join(", ")}
-                        </p>
-                        <p className="flex gap-2">
-                          <span className="text-white font-semibold">COSTO:</span>
-                          {course.details.cost}
-                        </p>
+                        {course.detalles.map((detail, idx) => {
+                          const [key, value] = detail.split(":")
+                          return (
+                            <p key={idx} className="flex gap-2">
+                              <span className="text-white font-semibold">{key}:</span>
+                              {value}
+                            </p>
+                          )
+                        })}
                       </div>
 
                       <button className="w-full bg-white text-black py-2 px-4 rounded hover:bg-gray-100 transition-colors font-medium">

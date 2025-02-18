@@ -15,37 +15,37 @@ const testimonials: Testimonial[] = [
     id: 1,
     name: "Pablo Salas",
     text: "Invertir en la formación de mi equipo en Training Lab ha sido una de las mejores decisiones que he tomado. Los cursos han tenido un impacto muy positivo en el desempeño de mi equipo y en los resultados de nuestra empresa. ¡Recomiendo encarecidamente Training Lab a cualquier empresa que busque potenciar el talento de sus colaboradores!",
-    image: "/Persona1.jpg",
+    image: "/Person.jpg",
   },
   {
     id: 2,
     name: "Juan Carlos Vegas",
     text: "Lo que más valoro de Training Lab es la flexibilidad que ofrecen. Puedo adaptar los cursos a mis necesidades y horarios. Además, el equipo de Training Lab está siempre dispuesto a personalizar la experiencia de aprendizaje para cada participante. ¡Es un gran aliado para el desarrollo profesional!",
-    image: "/Persona1.jpg",
+    image: "/Person.jpg",
   },
   {
     id: 3,
     name: "Gustavo Morales",
     text: "¡Training Lab superó todas mis expectativas! Me inscribí en el curso de liderazgo para impulsar mi carrera y las herramientas que adquirí han sido fundamentales para mejorar mi gestión de equipos. Los instructores son expertos en su campo y adaptaron el contenido a las necesidades específicas de nuestra empresa. ¡Recomiendo encarecidamente Training Lab a cualquier profesional que busque desarrollar sus habilidades!",
-    image: "/Persona1.jpg",
+    image: "/Person.jpg",
   },
   {
     id: 4,
     name: "Ana Martínez",
     text: "La calidad de la formación en Training Lab es excepcional. Los instructores son muy profesionales y el contenido está perfectamente estructurado. Ha sido una experiencia de aprendizaje transformadora.",
-    image: "/Persona1.jpg",
+    image: "/Person.jpg",
   },
   {
     id: 5,
     name: "Carlos Ruiz",
     text: "Training Lab me ha ayudado a desarrollar habilidades cruciales para mi carrera. El formato flexible y la calidad del contenido hacen que sea una inversión que vale la pena.",
-    image: "/Persona1.jpg",
+    image: "/Person.jpg",
   },
   {
     id: 6,
     name: "Laura Sánchez",
     text: "Una experiencia educativa excepcional. Los cursos están muy bien diseñados y el soporte del equipo es excelente. Altamente recomendado para desarrollo profesional.",
-    image: "/Persona1.jpg",
+    image: "/Person.jpg",
   },
 ]
 

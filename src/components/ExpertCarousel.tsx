@@ -1,42 +1,44 @@
-'use client'
-import { useState } from "react"
+"use client"
+
+import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
+import { db, collection, getDocs } from "../lib/firebaseConfig"
 
-interface Expert {
-  name: string
-  title: string
-  subtitle: string
-  bio: string
+interface ExpertFromFirebase {
+  id: string
+  nombre: string
+  puesto: string
+  descripcion: string
+}
+
+interface Expert extends ExpertFromFirebase {
   image: string
 }
 
-const experts: Expert[] = [
-  {
-    name: "Natalia Sánchez",
-    title: "Human Capital Services",
-    subtitle: "Regional Manager",
-    bio: "Experta en desarrollo organizacional con amplia experiencia en psicología y comunicación. Su especialidad es potenciar el talento humano en las empresas, diseñando e implementando estrategias para mejorar el clima laboral, la selección de personal y los programas de capacitación. Además, es una destacada coach ejecutiva, ayudando a líderes a alcanzar su máximo potencial.",
-    image: "/Persona.jpg", // Ajusta con la ruta correcta
-  },
-  {
-    name: "Max Santamaria",
-    title: "Leadership Development",
-    subtitle: "Senior Consultant",
-    bio: "Especialista en desarrollo de liderazgo con más de 12 años de experiencia en consultoría empresarial. Su enfoque innovador combina metodologías ágiles con principios de neurociencia para potenciar el desarrollo de habilidades directivas. Ha implementado programas exitosos de transformación cultural en organizaciones multinacionales.",
-    image: "/Persona1.jpg",
-  },
-  {
-    name: "Ana María Torres",
-    title: "Executive Education",
-    subtitle: "Program Director",
-    bio: "Doctora en Psicología Organizacional especializada en aprendizaje ejecutivo. Pionera en la implementación de metodologías híbridas de formación. Su experiencia incluye el diseño y dirección de programas de desarrollo para altos ejecutivos en más de 15 países de Latinoamérica. Experta en gestión del cambio y transformación organizacional.",
-    image: "/Persona.jpg",
-  },
-]
+const expertImages = ["/Persona1.jpg", "/Persona.jpg"]
 
 export function ExpertCarousel() {
+  const [experts, setExperts] = useState<Expert[]>([])
   const [currentExpert, setCurrentExpert] = useState(0)
+
+  useEffect(() => {
+    const fetchExperts = async () => {
+      const expertsCollection = collection(db, "socios")
+      const expertsSnapshot = await getDocs(expertsCollection)
+      const expertsList = expertsSnapshot.docs.map((doc, index) => {
+        const data = doc.data() as ExpertFromFirebase
+        return {
+          ...data,
+          id: doc.id,
+          image: expertImages[index % expertImages.length],
+        }
+      })
+      setExperts(expertsList)
+    }
+
+    fetchExperts()
+  }, [])
 
   const nextExpert = () => {
     setCurrentExpert((prev) => (prev + 1) % experts.length)
@@ -44,6 +46,10 @@ export function ExpertCarousel() {
 
   const previousExpert = () => {
     setCurrentExpert((prev) => (prev - 1 + experts.length) % experts.length)
+  }
+
+  if (experts.length === 0) {
+    return <div>Loading...</div>
   }
 
   return (
@@ -74,9 +80,9 @@ export function ExpertCarousel() {
             {/* Imagen del experto */}
             <div className="flex justify-center">
               <Image
-                src={experts[currentExpert].image}
-                alt={experts[currentExpert].name}
-                width={300} // Ajusta según tu necesidad
+                src={experts[currentExpert].image || "/placeholder.svg"}
+                alt={`Foto de ${experts[currentExpert].nombre}, ${experts[currentExpert].puesto}`}
+                width={300}
                 height={400}
                 className="rounded-lg object-cover shadow-md"
               />
@@ -84,10 +90,9 @@ export function ExpertCarousel() {
 
             {/* Información del experto */}
             <div className="text-left">
-              <h3 className="text-2xl text-black font-bold mb-2">{experts[currentExpert].name}</h3>
-              <p className="text-gray-700 font-medium mb-1">{experts[currentExpert].title}</p>
-              <p className="text-gray-600 mb-6">{experts[currentExpert].subtitle}</p>
-              <p className="text-gray-700 leading-relaxed text-justify">{experts[currentExpert].bio}</p>
+              <h3 className="text-2xl text-black font-bold mb-2">{experts[currentExpert].nombre}</h3>
+              <p className="text-gray-700 font-medium mb-1">{experts[currentExpert].puesto}</p>
+              <p className="text-gray-700 leading-relaxed text-justify">{experts[currentExpert].descripcion}</p>
             </div>
           </div>
 
@@ -118,3 +123,4 @@ export function ExpertCarousel() {
     </section>
   )
 }
+
