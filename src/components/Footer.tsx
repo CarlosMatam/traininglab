@@ -26,10 +26,20 @@ export function ContactFooter() {
           </div>
         </div>
         <div className="mt-6 flex items-center space-x-4">
-          <a href="#" className="text-white hover:text-gray-400 text-xl">
+          <a
+            href="https://www.facebook.com/share/19zf7TphcW/"
+            className="text-white hover:text-gray-400 text-xl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaFacebook />
           </a>
-          <a href="#" className="text-white hover:text-gray-400 text-xl">
+          <a
+            href="https://www.instagram.com/deinsaglobal_/"
+            className="text-white hover:text-gray-400 text-xl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaInstagram />
           </a>
         </div>

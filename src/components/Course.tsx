@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useState, useEffect } from "react"
 import { db, collection, getDocs } from "../lib/firebaseConfig"
 
-const courseImages = ["/Cursos.jpg", "/Cursos1.jpg", "/Cursos2.jpg", "/Cursos3.jpg", "/Cursos4.jpg",, "/Cursos5.jpg", "/Cursos6.jpg"]
+const courseImages = ["/Cursos.jpg", "/Cursos1.jpg", "/Cursos2.jpg", "/Cursos3.jpg", "/Cursos4.jpg", , "/Cursos5.jpg", "/Cursos6.jpg"]
 
 interface Course {
   id: string
@@ -27,7 +27,7 @@ export function CourseGrid() {
       const coursesList = coursesSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-        image: courseImages[Math.floor(Math.random() * courseImages.length)],
+        image: courseImages[Math.floor(Math.random() * Math.min(7, courseImages.length))],
       })) as Course[]
       setCourses(coursesList)
     }
@@ -53,6 +53,10 @@ export function CourseGrid() {
       return { size: "base", scale: 1 }
     }
   }
+
+  const scrollToSection = () => {
+  document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" });
+};
 
   return (
     <section id="cursos" className="py-20 bg-white">
@@ -86,8 +90,8 @@ export function CourseGrid() {
                   {/* Contenedor de la imagen superior */}
                   <div className="relative w-full h-48">
                     <Image
-                      src={course.image || "/placeholder.svg"}
-                      alt={course.titulo}
+                      src={course.image || "/Curso1.jpg"}
+                      alt={course.titulo || "Imagen de Cursos"}
                       fill
                       className="object-cover"
                       priority={index === 0}
@@ -143,7 +147,10 @@ export function CourseGrid() {
                         })}
                       </div>
 
-                      <button className="w-full bg-white text-black py-2 px-4 rounded hover:bg-gray-100 transition-colors font-medium">
+                      <button
+                        className="w-full bg-white text-black py-2 px-4 rounded hover:bg-gray-100 transition-colors font-medium"
+                        onClick={scrollToSection}
+                      >
                         INSCRIBIRSE
                       </button>
                     </div>
