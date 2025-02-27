@@ -90,7 +90,7 @@ export function CourseGrid() {
                   {/* Contenedor de la imagen superior */}
                   <div className="relative w-full h-48">
                     <Image
-                      src={course.image || "/Curso1.jpg"}
+                      src={course.image || "/Cursos1.jpg"}
                       alt={course.titulo || "Imagen de Cursos"}
                       fill
                       className="object-cover"

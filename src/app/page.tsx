@@ -7,7 +7,7 @@ import { motion, useAnimation } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import { Navbar } from "@/components/Navbar"
 import { HeroSection } from "@/components/HeroSection"
-import { FloatingChatButton } from "@/components/FloatingChatButton"
+import Head from 'next/head';
 import { AboutSection } from "@/components/AboutSection"
 import { ExpertCarousel } from "@/components/ExpertCarousel"
 import { ContactFooter } from "@/components/Footer"
@@ -47,7 +47,13 @@ const AnimatedSection = ({ children }: { children: React.ReactNode }) => {
 
 const HomePage = () => {
   return (
+
     <main>
+
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <Navbar />
       <HeroSection />
 
@@ -79,7 +85,7 @@ const HomePage = () => {
         <ContactFooter />
       </AnimatedSection>
 
-  
+
     </main>
   )
 }
